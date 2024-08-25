@@ -11,52 +11,73 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.testazrac.databinding.ActivityMainBinding; // Импортируем сгенерированный класс ViewBinding
+import com.example.testazrac.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ActivityMainBinding binding; // Объявляем переменную binding
+    private ActivityMainBinding binding;
+    private int toastIndex = 0; // Индекс для отслеживания текущего Toast сообщения
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Инициализация ViewBinding
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Пример установки текста с использованием binding
         binding.text.setText("Hello World!");
 
-        // Включение режима EdgeToEdge
         EdgeToEdge.enable(this);
 
-        // Установка OnApplyWindowInsetsListener с использованием ViewBinding
         ViewCompat.setOnApplyWindowInsetsListener(binding.main, (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        // Настраиваем слушатель нажатия для кнопки для отображения выбранного варианта
-        binding.button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Получаем ID выбранной радиокнопки в группе
-                int selectedId = binding.radioGroup.getCheckedRadioButtonId();
+        binding.button2.setOnClickListener(v -> {
+            int selectedId = binding.radioGroup.getCheckedRadioButtonId();
 
-                if (selectedId != -1) {
-                    // Находим выбранную радиокнопку по ID
-                    RadioButton selectedRadioButton = findViewById(selectedId);
-                    String selectedText = selectedRadioButton.getText().toString();
-
-                    // Отображаем текст выбранного варианта с помощью Toast
-                    Toast.makeText(MainActivity.this, "Вы выбрали: " + selectedText, Toast.LENGTH_SHORT).show();
-                } else {
-                    // Если ни один вариант не выбран, отображаем сообщение
-                    Toast.makeText(MainActivity.this, "Пожалуйста, выберите вариант", Toast.LENGTH_SHORT).show();
-                }
+            if (selectedId != -1) {
+                RadioButton selectedRadioButton = findViewById(selectedId);
+                String selectedText = selectedRadioButton.getText().toString();
+                Toast.makeText(MainActivity.this, "Вы выбрали: " + selectedText, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(MainActivity.this, "Пожалуйста, выберите вариант", Toast.LENGTH_SHORT).show();
             }
         });
+
+        binding.button3.setOnClickListener(v -> {
+            // Получаем текст из EditText
+            String inputText = binding.textInputEditText.getText().toString();
+
+            // Проверяем, если текст не пустой, то устанавливаем его в TextView
+            if (!inputText.isEmpty()) {
+                binding.textVisible.setText("Привет, " + inputText);
+                binding.textVisible.setVisibility(View.VISIBLE);
+            } else {
+                // Показываем следующую Toast при каждом нажатии на кнопку
+                showNextToast();
+            }
+        });
+    }
+
+    // Метод для показа следующего Toast сообщения
+    private void showNextToast() {
+        String[] messages = {
+                "Я же попросил",
+                "ПоЖаЛУйсТА, введите текст",
+                "Вы не ввели текст",
+                "Перестаньте",
+                "Лаааадно, играйся"
+        };
+
+        if (toastIndex < messages.length) {
+            Toast.makeText(MainActivity.this, messages[toastIndex], Toast.LENGTH_SHORT).show();
+            toastIndex++;
+        } else {
+            // Сбросить индекс после показа всех сообщений, если нужно
+            toastIndex = 0;
+        }
     }
 }
