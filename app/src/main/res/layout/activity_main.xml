@@ -7,6 +7,19 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <!-- Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- ImageView с изображением -->
     <ImageView
         android:id="@+id/image"
         android:layout_width="100dp"
@@ -14,8 +27,9 @@
         android:layout_margin="20dp"
         android:src="@drawable/ic_android_black_24dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
+    <!-- TextView для заголовка рядом с ImageView -->
     <TextView
         android:id="@+id/text"
         android:layout_width="0dp"
@@ -28,6 +42,7 @@
         app:layout_constraintStart_toEndOf="@id/image"
         app:layout_constraintTop_toTopOf="@id/image" />
 
+    <!-- TextView для отображения дополнительного текста под заголовком -->
     <TextView
         android:id="@+id/text2"
         android:layout_width="0dp"
@@ -40,6 +55,7 @@
         app:layout_constraintStart_toStartOf="@id/text"
         app:layout_constraintTop_toBottomOf="@id/text" />
 
+    <!-- Barrier для выравнивания элементов по нижней границе -->
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier"
         android:layout_width="0dp"
@@ -50,6 +66,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <!-- Button под barrier -->
     <Button
         android:id="@+id/button"
         android:layout_width="0dp"
@@ -59,16 +76,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/barrier" />
 
+    <!-- RadioGroup с 4 вариантами выбора -->
     <RadioGroup
         android:id="@+id/radioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/button">
 
+        <!-- RadioButtons внутри RadioGroup -->
         <RadioButton
             android:id="@+id/radioButton1"
             android:layout_width="wrap_content"
@@ -94,6 +113,7 @@
             android:text="Option 4" />
     </RadioGroup>
 
+    <!-- Button для отправки выбранного RadioButton -->
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
@@ -104,20 +124,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/radioGroup" />
 
+    <!-- TextInputLayout с TextInputEditText внутри -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
-        app:endIconMode="clear_text"
-        app:startIconDrawable="@drawable/ic_android_black_24dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Введите имя"
+        app:endIconMode="clear_text"
         app:errorEnabled="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textVisible"
-        app:layout_constraintVertical_bias="0.1">
+        app:layout_constraintVertical_bias="0.1"
+        app:startIconDrawable="@drawable/ic_android_black_24dp">
 
         <!-- EditText внутри TextInputLayout -->
         <com.google.android.material.textfield.TextInputEditText
@@ -129,6 +150,7 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <!-- Button под TextInputLayout -->
     <Button
         android:id="@+id/button3"
         android:layout_width="wrap_content"
@@ -139,6 +161,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textInputLayout" />
 
+    <!-- TextView, который отображается при вводе текста -->
     <TextView
         android:id="@+id/textVisible"
         android:layout_width="wrap_content"
@@ -152,5 +175,28 @@
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button2" />
+
+    <!-- BottomNavigationView для навигации -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_nav_menu" />
+
+    <!-- Fragment для навигации -->
+    <fragment
+        android:id="@+id/nav_host_fragment_activity_main"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/mobile_navigation" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

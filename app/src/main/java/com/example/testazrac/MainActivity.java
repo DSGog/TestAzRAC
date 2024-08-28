@@ -5,13 +5,18 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import com.example.testazrac.databinding.ActivityMainBinding;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,19 +27,34 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Инициализация привязки к макету
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // Инициализация Toolbar и установка его в качестве ActionBar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        // Настройка BottomNavigationView и NavController
+        BottomNavigationView navView = findViewById(R.id.bottomNavigationView);
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
+                .build();
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        NavigationUI.setupWithNavController(binding.bottomNavigationView, navController);
+
+        // Установка текста в TextView
         binding.text.setText("Hello World!");
 
-        EdgeToEdge.enable(this);
-
+        // Обработка отступов для системных панелей (например, вырезов и закругленных углов)
         ViewCompat.setOnApplyWindowInsetsListener(binding.main, (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
+        // Обработка нажатия на кнопку button2
         binding.button2.setOnClickListener(v -> {
             int selectedId = binding.radioGroup.getCheckedRadioButtonId();
 
@@ -47,16 +67,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Обработка нажатия на кнопку button3
         binding.button3.setOnClickListener(v -> {
-            // Получаем текст из EditText
+            // Получаем текст из TextInputEditText
             String inputText = binding.textInputEditText.getText().toString();
 
-            // Проверяем, если текст не пустой, то устанавливаем его в TextView
+            // Проверяем, если текст не пустой, устанавливаем его в TextView
             if (!inputText.isEmpty()) {
                 binding.textVisible.setText("Привет, " + inputText);
                 binding.textVisible.setVisibility(View.VISIBLE);
             } else {
-                // Показываем следующую Toast при каждом нажатии на кнопку
+                // Показываем следующее Toast сообщение, если текст пустой
                 showNextToast();
             }
         });
@@ -72,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
                 "Лаааадно, играйся"
         };
 
+        // Показываем текущее сообщение и инкрементируем индекс
         if (toastIndex < messages.length) {
             Toast.makeText(MainActivity.this, messages[toastIndex], Toast.LENGTH_SHORT).show();
             toastIndex++;
