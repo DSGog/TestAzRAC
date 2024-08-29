@@ -3,4 +3,7 @@
     <string name="home">home</string>
     <string name="dashboard">dashboard</string>
     <string name="notifications">notifications</string>
+    <string name="Home">Главная страница</string>
+    <string name="Dashboard">Основное меню</string>
+    <string name="notifications_bottom">Уведомления</string>
 </resources>
