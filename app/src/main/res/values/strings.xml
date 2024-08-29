@@ -6,4 +6,5 @@
     <string name="Home">Главная страница</string>
     <string name="Dashboard">Основное меню</string>
     <string name="notifications_bottom">Уведомления</string>
+    <string name="noEmptyString">Не оставляейте поле пустым</string>
 </resources>
