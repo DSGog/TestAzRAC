@@ -1,4 +1,4 @@
-package com.example.testazrac.home;
+package com.example.test_gb.home;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.testazrac.databinding.FragmentHomeBinding;
+import com.example.test_gb.databinding.FragmentHomeBinding;
 
 public class HomeFragment extends Fragment {
 

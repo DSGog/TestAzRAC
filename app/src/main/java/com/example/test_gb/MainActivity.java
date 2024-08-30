@@ -1,4 +1,4 @@
-package com.example.testazrac;
+package com.example.test_gb;
 
 import android.os.Bundle;
 import android.view.View;
@@ -15,13 +15,13 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.testazrac.databinding.ActivityMainBinding;
+import com.example.test_gb.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-    private int toastIndex = 0; // Индекс для отслеживания текущего Toast сообщения
+    private int toastIndex = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         // Настройка BottomNavigationView и NavController
         BottomNavigationView navView = findViewById(R.id.bottomNavigationView);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
+                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications, R.id.new_notification_fragment)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
             int selectedId = binding.radioGroup.getCheckedRadioButtonId();
 
             if (selectedId != -1) {
-                RadioButton selectedRadioButton = findViewById(selectedId);
+                RadioButton selectedRadioButton = binding.getRoot().findViewById(selectedId);
                 String selectedText = selectedRadioButton.getText().toString();
                 Toast.makeText(MainActivity.this, "Вы выбрали: " + selectedText, Toast.LENGTH_SHORT).show();
             } else {
@@ -69,15 +69,12 @@ public class MainActivity extends AppCompatActivity {
 
         // Обработка нажатия на кнопку button3
         binding.button3.setOnClickListener(v -> {
-            // Получаем текст из TextInputEditText
             String inputText = binding.textInputEditText.getText().toString();
 
-            // Проверяем, если текст не пустой, устанавливаем его в TextView
             if (!inputText.isEmpty()) {
                 binding.textVisible.setText("Привет, " + inputText);
                 binding.textVisible.setVisibility(View.VISIBLE);
             } else {
-                // Показываем следующее Toast сообщение, если текст пустой
                 showNextToast();
             }
         });
@@ -93,12 +90,10 @@ public class MainActivity extends AppCompatActivity {
                 "Лаааадно, играйся"
         };
 
-        // Показываем текущее сообщение и инкрементируем индекс
         if (toastIndex < messages.length) {
             Toast.makeText(MainActivity.this, messages[toastIndex], Toast.LENGTH_SHORT).show();
             toastIndex++;
         } else {
-            // Сбросить индекс после показа всех сообщений, если нужно
             toastIndex = 0;
         }
     }

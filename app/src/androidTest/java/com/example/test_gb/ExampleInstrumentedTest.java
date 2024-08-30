@@ -1,4 +1,4 @@
-package com.example.testazrac;
+package com.example.test_gb;
 
 import android.content.Context;
 

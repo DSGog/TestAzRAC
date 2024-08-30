@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.testazrac"
+    namespace = "com.example.test_gb"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.testazrac"
+        applicationId = "com.example.test_gb"
         minSdk = 26
         targetSdk = 34
         versionCode = 1

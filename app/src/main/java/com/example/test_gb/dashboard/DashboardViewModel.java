@@ -1,4 +1,4 @@
-package com.example.testazrac.dashboard;
+package com.example.test_gb.dashboard;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
